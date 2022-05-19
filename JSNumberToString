@@ -7,6 +7,7 @@
         }
     </style>
     <script type="text/javascript">
+	    //Check is the value is a negative number
         function isNegative(num) {
 		  if (Math.sign(num) === -1) {
 			return true;
@@ -15,13 +16,13 @@
 		  return false;
 		  }
 		
-		function isNumberKey(evt)
+		function isNumberKey(evt)  // don't allow any non numeric chars apart from -
 		{
 		  var charCode = (evt.which) ? evt.which : event.keyCode;
 		 console.log(charCode);
 		 
 			if (charCode != 46 && charCode != 45 && charCode > 31
-			&& (charCode < 48 || charCode > 57) && charCode != 173 )
+			&& (charCode < 48 || charCode > 57) && charCode != 173 ) //charCode 173 is -
 			 return false;
 
 		  return true;
@@ -29,21 +30,21 @@
 
 			
 		function update() {
-            var bigNumArry = new Array('', ' Thousand', ' Million', ' Billion', ' Trillion', ' Quadrillion', ' Quintillion');
+            var bigNumArry = new Array('', ' Thousand', ' Million', ' Billion', ' Trillion', ' Quadrillion', ' Quintillion'); // we'll stop at Quintillion
 
-            var output = '';
-            var numString = document.getElementById('number').value;
+            var output = ''; 
+            var numString = document.getElementById('number').value; //text box value
             var finlOutPut = new Array();
 			
-		    var negativeValue = isNegative(numString);
+		    var negativeValue = isNegative(numString);  //check if our value is negative
 			
-			if (numString == '') {
+			if (numString == '') { //in case  user deletes previous entry so they don't see 'undefined'
 			 document.getElementById('container').innerHTML = 'Your number entered will appear here';
              return;
 			}
 					
 		    if (negativeValue === true) {
-				numString = numString.replace('-','');
+				numString = numString.replace('-','');  //with the negativeValue set we can hide the hyphen so the numeric calculations don't get affected
 			}
 			
             if (numString == '0') {
@@ -51,18 +52,18 @@
                 return;
             }
 
-            if (numString == 0 ) {
+            if (numString == 0 ) {  //extra error handling
                 document.getElementById('container').innerHTML = 'Please enter only numbers';
                 return;
             }
 
             
-            if (numString > 100000000000000000000) {
+            if (numString > 100000000000000000000) {  //top limit
                 document.getElementById('container').innerHTML = 'Please enter a number lower than Nine Hundred & Ninety Nine Quintillion';
                 return;
             }
 			
-			if (numString == '-') {
+			if (numString == '-') { //this will display at the beginning in the instant before a number is entered to go after it
 				document.getElementById('container').innerHTML = 'minus ';
 				return
 			}
@@ -94,7 +95,7 @@
                 finlOutPut[j] = triConvert(parseInt(finlOutPut[j], 10));
             }
 
-            var bigScalCntr = 0; //this int marks the million billion trillion... Array
+            var bigScalCntr = 0; //this int marks the million billion trillion...etc array
 
             for (b = finlOutPut.length - 1; b >= 0; b--) {
                 if (finlOutPut[b] != "dontAddBigSufix") {
@@ -107,7 +108,7 @@
                 }
             }
 
-            //convert The output Array to , more printable string 
+            //convert The output array to , more printable string 
             for (n = 0; n < finlOutPut.length; n++) {
                 output += finlOutPut[n];
             }
@@ -115,7 +116,7 @@
 			if (negativeValue === true) {
 				
 				output = 'minus ' + output;
-				document.getElementById('container').innerHTML = output; //print the output
+				document.getElementById('container').innerHTML = output; //print the output with minus prefix
 			}else
 			{
 				
